@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const JobsTab = ({ recommendations = [] }) => {
@@ -6,6 +6,8 @@ export const JobsTab = ({ recommendations = [] }) => {
   const [query, setQuery] = useState("");
   const [roleFilter, setRoleFilter] = useState("All");
   const [categoryFilter, setCategoryFilter] = useState("All");
+  const [page, setPage] = useState(1);
+  const pageSize = 8;
 
   const companyDescriptions = {
     Google:
@@ -84,6 +86,13 @@ export const JobsTab = ({ recommendations = [] }) => {
     });
   }, [companyCards, query, roleFilter, categoryFilter, recommendations]);
 
+  useEffect(() => {
+    setPage(1);
+  }, [query, roleFilter, categoryFilter]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredCompanyCards.length / pageSize));
+  const pagedCompanies = filteredCompanyCards.slice((page - 1) * pageSize, page * pageSize);
+
   const handleOpenCompany = (company) => {
     navigate(`/dashboard/company/${encodeURIComponent(company)}`);
   };
@@ -144,7 +153,7 @@ export const JobsTab = ({ recommendations = [] }) => {
       </div>
 
       <div className="company-selector-grid">
-        {filteredCompanyCards.map((job) => (
+        {pagedCompanies.map((job) => (
           <button
             key={job.company}
             className="panel company-tile"
@@ -170,6 +179,13 @@ export const JobsTab = ({ recommendations = [] }) => {
         <article className="panel">
           <p className="subtitle">No companies found for your search.</p>
         </article>
+      ) : null}
+
+      {filteredCompanyCards.length ? (
+        <div className="jobs-filter-actions">
+          <button className="ghost-btn" onClick={() => setPage(Math.max(1, page - 1))}>Prev</button>
+          <button className="ghost-btn" onClick={() => setPage(Math.min(totalPages, page + 1))}>Next</button>
+        </div>
       ) : null}
     </section>
   );

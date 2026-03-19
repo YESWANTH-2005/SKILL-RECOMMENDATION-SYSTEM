@@ -1,11 +1,19 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { api } from "../api/client";
 
 export const TopBar = ({ title, subtitle }) => {
-  const { user, logout } = useAuth();
+  const { user, token, refreshToken, logout } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    if (token) {
+      try {
+        await api.logout(token, refreshToken);
+      } catch (error) {
+        // Client-side logout still clears local session.
+      }
+    }
     logout();
     navigate("/login");
   };
@@ -19,6 +27,7 @@ export const TopBar = ({ title, subtitle }) => {
       </div>
       <div className="topbar-actions">
         <span className="welcome">{user?.name || "User"}</span>
+        <Link className="ghost-btn" to="/admin">Admin</Link>
         <Link className="ghost-btn" to="/dashboard">Dashboard</Link>
         <button className="ghost-btn" onClick={handleLogout}>Logout</button>
       </div>

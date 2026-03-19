@@ -6,6 +6,7 @@ import { SignupPage } from "./pages/SignupPage";
 import { DashboardPage } from "./pages/DashboardPage";
 import { CompanyJobsPage } from "./pages/CompanyJobsPage";
 import { RoleDetailPage } from "./pages/RoleDetailPage";
+import { AdminPage } from "./pages/AdminPage";
 
 const ProtectedRoute = () => {
   const { token } = useAuth();
@@ -22,6 +23,7 @@ export const App = () => {
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/dashboard/company/:company" element={<CompanyJobsPage />} />
         <Route path="/dashboard/company/:company/role/:role" element={<RoleDetailPage />} />
+        <Route path="/admin" element={<AdminPage />} />
       </Route>
     </Routes>
   );

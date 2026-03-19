@@ -4,17 +4,24 @@ import { useAuth } from "../context/AuthContext";
 import { TopBar } from "../components/TopBar";
 import { JobsTab } from "../components/JobsTab";
 import { SkillsTab } from "../components/SkillsTab";
+import { MyDashboardTab } from "../components/MyDashboardTab";
 
 export const DashboardPage = () => {
   const { token } = useAuth();
-  const [activeTab, setActiveTab] = useState("jobs");
+  const [activeTab, setActiveTab] = useState("my-dashboard");
   const [dashboard, setDashboard] = useState(null);
+  const [analytics, setAnalytics] = useState(null);
   const [error, setError] = useState("");
 
   const loadDashboard = async () => {
     try {
-      const data = await api.dashboard(token);
+      const [dashboardData, analyticsData] = await Promise.all([
+        api.dashboard(token),
+        api.analytics(token),
+      ]);
+      const data = dashboardData;
       setDashboard(data);
+      setAnalytics(analyticsData.analytics);
     } catch (err) {
       setError(err.message);
     }
@@ -38,6 +45,12 @@ export const DashboardPage = () => {
 
       <section className="tab-switcher">
         <button
+          className={activeTab === "my-dashboard" ? "active" : ""}
+          onClick={() => setActiveTab("my-dashboard")}
+        >
+          My Dashboard
+        </button>
+        <button
           className={activeTab === "jobs" ? "active" : ""}
           onClick={() => setActiveTab("jobs")}
         >
@@ -53,6 +66,10 @@ export const DashboardPage = () => {
 
       {error ? <p className="error">{error}</p> : null}
       {!dashboard ? <p>Loading dashboard...</p> : null}
+
+      {dashboard && activeTab === "my-dashboard" ? (
+        <MyDashboardTab token={token} dashboard={dashboard} analytics={analytics} onRefresh={loadDashboard} />
+      ) : null}
 
       {dashboard && activeTab === "jobs" ? (
         <JobsTab

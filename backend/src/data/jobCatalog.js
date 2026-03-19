@@ -384,4 +384,92 @@ export const jobCatalog = [
       { title: "Power BI Learning", url: "https://learn.microsoft.com/en-us/training/powerplatform/power-bi/" },
     ],
   },
+  {
+    company: "Tesla",
+    role: "Autonomy Software Engineer",
+    category: "AI/ML",
+    requiredSkills: ["python", "c++", "computer vision", "pytorch", "systems optimization"],
+    learningResources: [
+      { title: "PyTorch Tutorials", url: "https://pytorch.org/tutorials/" },
+      { title: "OpenCV Docs", url: "https://docs.opencv.org/" },
+      { title: "CPP Reference", url: "https://en.cppreference.com/w/" },
+    ],
+  },
+  {
+    company: "Spotify",
+    role: "Backend Engineer",
+    category: "Backend",
+    requiredSkills: ["java", "microservices", "api design", "databases", "observability"],
+    learningResources: [
+      { title: "Java Tutorials", url: "https://docs.oracle.com/javase/tutorial/" },
+      { title: "Microservices.io", url: "https://microservices.io/" },
+      { title: "OpenTelemetry Docs", url: "https://opentelemetry.io/docs/" },
+    ],
+  },
+  {
+    company: "Shopify",
+    role: "Full Stack Engineer",
+    category: "Web Development",
+    requiredSkills: ["javascript", "react", "node.js", "graphql", "testing"],
+    learningResources: [
+      { title: "React Docs", url: "https://react.dev/learn" },
+      { title: "Node.js Learn", url: "https://nodejs.org/en/learn" },
+      { title: "GraphQL Learn", url: "https://graphql.org/learn/" },
+    ],
+  },
+  {
+    company: "Atlassian",
+    role: "DevOps Engineer",
+    category: "DevOps",
+    requiredSkills: ["ci/cd", "terraform", "kubernetes", "monitoring", "security"],
+    learningResources: [
+      { title: "Terraform Docs", url: "https://developer.hashicorp.com/terraform/docs" },
+      { title: "Kubernetes Basics", url: "https://kubernetes.io/docs/tutorials/kubernetes-basics/" },
+      { title: "Prometheus Monitoring", url: "https://prometheus.io/docs/introduction/overview/" },
+    ],
+  },
+  {
+    company: "Stripe",
+    role: "API Engineer",
+    category: "Backend",
+    requiredSkills: ["api design", "payments", "security", "node.js", "databases"],
+    learningResources: [
+      { title: "REST API Tutorial", url: "https://restfulapi.net/" },
+      { title: "OWASP Top 10", url: "https://owasp.org/www-project-top-ten/" },
+      { title: "Node.js Learn", url: "https://nodejs.org/en/learn" },
+    ],
+  },
+  {
+    company: "LinkedIn",
+    role: "Data Engineer",
+    category: "Data Engineering",
+    requiredSkills: ["python", "spark", "etl", "data warehousing", "airflow"],
+    learningResources: [
+      { title: "Apache Spark Docs", url: "https://spark.apache.org/docs/latest/" },
+      { title: "Airflow Docs", url: "https://airflow.apache.org/docs/" },
+      { title: "Data Engineering Zoomcamp", url: "https://github.com/DataTalksClub/data-engineering-zoomcamp" },
+    ],
+  },
+  {
+    company: "ByteDance",
+    role: "Mobile Engineer",
+    category: "Mobile",
+    requiredSkills: ["android sdk", "kotlin", "performance optimization", "api integration", "testing"],
+    learningResources: [
+      { title: "Android Developers", url: "https://developer.android.com/" },
+      { title: "Kotlin Docs", url: "https://kotlinlang.org/docs/home.html" },
+      { title: "Android Testing", url: "https://developer.android.com/training/testing" },
+    ],
+  },
+  {
+    company: "SpaceX",
+    role: "Systems Engineer",
+    category: "Systems",
+    requiredSkills: ["systems design", "embedded", "testing", "reliability", "debugging"],
+    learningResources: [
+      { title: "Systems Engineering Guide", url: "https://www.incose.org/systems-engineering-book" },
+      { title: "Embedded C Guide", url: "https://www.geeksforgeeks.org/c-programming-language/" },
+      { title: "GDB Manual", url: "https://sourceware.org/gdb/current/onlinedocs/gdb/" },
+    ],
+  },
 ];

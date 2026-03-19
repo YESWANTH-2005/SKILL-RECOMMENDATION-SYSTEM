@@ -62,18 +62,25 @@ export const RoleDetailPage = () => {
   const navigate = useNavigate();
   const [recommendations, setRecommendations] = useState([]);
   const [error, setError] = useState("");
+  const [mockQuestions, setMockQuestions] = useState([]);
 
   useEffect(() => {
     const load = async () => {
       try {
         const data = await api.dashboard(token);
         setRecommendations(data.recommendations || []);
+        try {
+          const mock = await api.mockInterview(token, role);
+          setMockQuestions(mock.questions || []);
+        } catch (mockError) {
+          setMockQuestions([]);
+        }
       } catch (err) {
         setError(err.message || "Failed to load role details");
       }
     };
     load();
-  }, [token]);
+  }, [token, role]);
 
   const job = useMemo(
     () => recommendations.find((item) => item.company === company && item.role === role),
@@ -178,6 +185,17 @@ export const RoleDetailPage = () => {
                     <li key={resource.url}>
                       <a href={resource.url} target="_blank" rel="noreferrer">{resource.title}</a>
                     </li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+
+            <article className="panel role-detail-card resources-block">
+              <div className="job-section">
+                <strong className="job-label">Mock Interview Questions</strong>
+                <ul className="links-list resource-list">
+                  {mockQuestions.map((question) => (
+                    <li key={question}>{question}</li>
                   ))}
                 </ul>
               </div>

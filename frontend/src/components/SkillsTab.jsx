@@ -62,6 +62,24 @@ export const SkillsTab = ({ token, trendingSkills = [], savedSkills = [], onSave
     });
   }, [categoryDetails]);
 
+  const skillExplanations = useMemo(() => {
+    const map = {
+      javascript: "Core language for building interactive web experiences.",
+      react: "Component-based UI library for fast frontend development.",
+      "node.js": "Server-side JavaScript runtime for APIs and backend services.",
+      "api design": "Defines how services communicate reliably and securely.",
+      testing: "Ensures features work and prevents regressions.",
+      typescript: "Adds type safety and scalability to JavaScript projects.",
+      sql: "Query language for structured data and analytics.",
+      python: "Versatile language for data, backend, and automation tasks.",
+    };
+
+    return (categoryDetails?.skills || []).map((skill) => ({
+      skill,
+      description: map[skill.toLowerCase()] || "A valuable skill that improves role readiness and project quality.",
+    }));
+  }, [categoryDetails]);
+
   return (
     <section className="tab-content">
       <div className="panel filters">
@@ -181,6 +199,18 @@ export const SkillsTab = ({ token, trendingSkills = [], savedSkills = [], onSave
             </button>
           ))}
         </div>
+      </article>
+
+      <article className="panel skills-panel">
+        <h3 className="skills-title">Why These Skills Matter</h3>
+        <ul className="job-list related-job-list">
+          {skillExplanations.map((item) => (
+            <li key={item.skill} className="related-job-item">
+              <strong className="related-company">{item.skill}</strong>
+              <span className="related-role">{item.description}</span>
+            </li>
+          ))}
+        </ul>
       </article>
 
       <article className="panel skills-panel">

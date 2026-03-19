@@ -1,9 +1,15 @@
 import { Job } from "../models/Job.js";
 import { getTrendingSkills } from "../services/trendingService.js";
+import { jobCatalog } from "../data/jobCatalog.js";
+
+const getJobsWithFallback = async () => {
+  const jobs = await Job.find({});
+  return jobs.length ? jobs : jobCatalog;
+};
 
 export const getSkillCategories = async (req, res, next) => {
   try {
-    const jobs = await Job.find({});
+    const jobs = await getJobsWithFallback();
     const categories = [...new Set(jobs.map((job) => job.category))];
     res.status(200).json({ categories });
   } catch (error) {
@@ -14,7 +20,8 @@ export const getSkillCategories = async (req, res, next) => {
 export const getCategoryDetails = async (req, res, next) => {
   try {
     const { category } = req.params;
-    const jobs = await Job.find({ category });
+    const jobsFromDb = await Job.find({ category });
+    const jobs = jobsFromDb.length ? jobsFromDb : jobCatalog.filter((job) => job.category === category);
 
     const allSkills = jobs.flatMap((job) => job.requiredSkills);
     const skills = [...new Set(allSkills)];
@@ -39,7 +46,7 @@ export const getCategoryDetails = async (req, res, next) => {
 
 export const getPublicSkillsList = async (req, res, next) => {
   try {
-    const jobs = await Job.find({});
+    const jobs = await getJobsWithFallback();
     const allSkills = jobs.flatMap((job) => job.requiredSkills || []);
     const skills = [...new Set(allSkills.map((skill) => skill.toLowerCase().trim()))]
       .filter(Boolean)

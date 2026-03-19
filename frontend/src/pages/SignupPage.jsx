@@ -127,7 +127,7 @@ export const SignupPage = () => {
                 className="ghost-btn"
                 onClick={() => {
                   const selectedSkill = skillQuery.trim().toLowerCase();
-                  if (!selectedSkill || !availableSkills.includes(selectedSkill)) return;
+                  if (!selectedSkill) return;
                   setForm((prev) => ({
                     ...prev,
                     knownSkills: prev.knownSkills.includes(selectedSkill)
