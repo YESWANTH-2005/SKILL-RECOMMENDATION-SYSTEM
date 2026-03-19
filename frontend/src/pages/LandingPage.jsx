@@ -15,25 +15,42 @@ const highlights = [
   { label: "Dashboard", value: "Jobs Tab + Skills Tab" },
 ];
 
+const fallbackTrendingSkills = [
+  "Generative AI",
+  "MLOps",
+  "TypeScript",
+  "Cloud Security",
+  "Data Engineering",
+  "Prompt Engineering",
+  "Kubernetes",
+  "System Design",
+];
+
+const normalizeSkills = (skills = []) =>
+  skills
+    .map((item) => {
+      if (typeof item === "string") return item;
+      if (item && typeof item === "object") {
+        return item.skill || item.name || item.title || item.value || "";
+      }
+      return "";
+    })
+    .map((skill) => skill.trim())
+    .filter(Boolean);
+
 export const LandingPage = () => {
-  const [trendingSkills, setTrendingSkills] = useState([]);
+  const [trendingSkills, setTrendingSkills] = useState(fallbackTrendingSkills);
 
   useEffect(() => {
     const loadTrendingSkills = async () => {
       try {
         const data = await api.trendingSkillsPublic();
-        setTrendingSkills(data.trendingSkills || []);
+        const normalized = normalizeSkills(data?.trendingSkills);
+        if (normalized.length) {
+          setTrendingSkills(normalized);
+        }
       } catch (error) {
-        setTrendingSkills([
-          "Generative AI",
-          "MLOps",
-          "TypeScript",
-          "Cloud Security",
-          "Data Engineering",
-          "Prompt Engineering",
-          "Kubernetes",
-          "System Design",
-        ]);
+        setTrendingSkills(fallbackTrendingSkills);
       }
     };
     loadTrendingSkills();
